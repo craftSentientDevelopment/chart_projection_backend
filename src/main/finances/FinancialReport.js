@@ -79,8 +79,9 @@ export default class FinancialReport {
         return this.totalUnitsSold;
     }
 
-    getTotalCost(){
+    getTotalCost(month){
         let totalCost = 0;
+        if(month == 'January') totalCost = 1000;
         for(let indexOfProduct = 0; indexOfProduct < this.listOfProducts.length; indexOfProduct++){            
             totalCost += this.listOfProducts[indexOfProduct].getTotalCost();
         }
@@ -118,7 +119,7 @@ export default class FinancialReport {
         this.monthlyReport[month]['totalNumberOfProducts'] = this.getNumberOfProducts();
         this.monthlyReport[month][`totalUnitsSold`] = this.getTotalUnitsSold();
         this.monthlyReport[month][`totalRevenue`] = this.getTotalRevenue();
-        this.monthlyReport[month][`totalCost`] = this.getTotalCost();
+        this.monthlyReport[month][`totalCost`] = this.getTotalCost(month);
         this.monthlyReport[month][`totalProfits`] = this.getTotalProfit();
         this.monthlyReport[month][`totalNetProfits`] = this.getNetProfit();
         

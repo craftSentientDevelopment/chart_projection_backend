@@ -1,17 +1,20 @@
 
 export default class Product {
     // attributes
-    type               = "Product";
-    id                 = "";
-    name               = "";
-    units              = 0;
-    manufacturingCost  = 0;
-    samplingCost       = 0;
-    shippingCost       = 0;
-    sellingPrice       = 0;
+    id                  = "";
+    name                = "";
+    units               = 0;
+    unitsSold           = 0
+    manufacturingCost   = 0;
+    samplingCost        = 0;
+    shippingCost        = 0;
+    sellingPrice        = 0;
+    isResupplying       = false;
+    resupply            = 0;
 
     // constructor
-    Product(id=0, name="", units=0, manufacturingCost=0, samplingCost=0, shippingCost=0, sellingPrice=0){
+    constructor(id=0, name="", units=0, manufacturingCost=0, samplingCost=0, shippingCost=0, sellingPrice=0, unitsSold=0){
+        // console.log(id, name, units, manufacturingCost, samplingCost, sellingPrice, unitsSold)
         this.id                 = id;
         this.name               = name;
         this.units              = units;
@@ -19,6 +22,9 @@ export default class Product {
         this.samplingCost       = samplingCost;
         this.shippingCost       = shippingCost;
         this.sellingPrice       = sellingPrice;
+        this.unitsSold          = unitsSold;
+        this.isResupplying      = false;
+        this.resupply           = (this.units*this.unitsSold)
     }
 
     // getters
@@ -39,11 +45,13 @@ export default class Product {
     setSamplingCost(samplingCost)               { this.samplingCost = samplingCost; }
     setShippingCost(shippingCost)               { this.shippingCost = shippingCost; }
     setSellingPrice(sellingPrice)               { this.sellingPrice = sellingPrice; }
+    setUnitsSold(unitsSold)                     { this.unitsSold = unitsSold}
 
     // methods
-    getTotalCost()      { return ( this.manufacturingCost*this.units ) + this.shippingCost; }
-    getTotalRevenue()   { return ( this.sellingPrice * this.units ); }
-    getTotalProfits()   { return this.getTotalRevenue() - this.getTotalCost(); }
+    getTotalCost()                  { return (this.manufacturingCost*this.units ) + this.shippingCost; }
+    getUnitsSold()                  { return Math.floor(this.units * this.unitsSold); }
+    getTotalRevenue()               { return this.sellingPrice * this.getUnitsSold(); }
+    getTotalProfits()               { return this.getTotalRevenue() - this.getTotalCost(); }
     print(){
         console.log(
         `Id:                ${this.id}

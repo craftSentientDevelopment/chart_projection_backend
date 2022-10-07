@@ -117,7 +117,7 @@ export default class FinancialReport {
         let display = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'})
         this.monthlyReport[month]['totalNumberOfProducts'] = this.getNumberOfProducts();
         this.monthlyReport[month][`totalUnitsSold`] = this.getTotalUnitsSold();
-        this.monthlyReport[month][`totalRevenue`] = this.totalRevenue;
+        this.monthlyReport[month][`totalRevenue`] = this.getTotalRevenue();
         this.monthlyReport[month][`totalCost`] = this.getTotalCost();
         this.monthlyReport[month][`totalProfits`] = this.getTotalProfit();
         this.monthlyReport[month][`totalNetProfits`] = this.getNetProfit();

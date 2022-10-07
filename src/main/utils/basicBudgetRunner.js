@@ -10,7 +10,7 @@ export default function basicBudgetRunner(print){
     let priceBoughtAt               = 6;
     let samplingCost                = 250;
     let shippingHandlingAndMiscCost = 200;
-    let productSoldAt               = 40;
+    let productSoldAt               = 39.99;
     let percentageSold              = .40;
     let additionalInvestmentCost    = 1000;
 

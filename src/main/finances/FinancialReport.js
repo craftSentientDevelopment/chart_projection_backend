@@ -2,8 +2,16 @@ import "./product/Product.js";
 import Product from "./product/Product.js";
 
 export default class FinancialReport {
-    months              = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    monthlyReport         = {January:{}, February:{}, March:{}, April:{}, May:{}, June:{}, July:{}, August:{}, September:{}, October:{}, November:{}, December:{}}
+    months              = [
+        "January", "February", "March", "April", 
+        "May", "June", "July", "August", 
+        "September", "October", "November", "December"
+    ];
+    monthlyReport       = {
+        January:{}, February:{}, March:{}, April:{}, 
+        May:{}, June:{}, July:{}, August:{}, 
+        September:{}, October:{}, November:{}, December:{}
+    }
     quarters            = {first:{}, second:{}, third:{}, fourth:{}};
     fiscalYear          = []
     initialInvestment   = 0;
@@ -18,38 +26,43 @@ export default class FinancialReport {
     listOfProducts      = [];
     productMap          = {};
 
-    constructor(listOfProducts = [], storeFrontCost= 0){
-        this.listOfProducts = listOfProducts;
-        this.storeFrontCost = storeFrontCost;
-    }
+    constructor(listOfProducts = [], storeFrontCost= 0){ 
+        this.listOfProducts = listOfProducts; 
+        this.storeFrontCost = storeFrontCost; }
 
-    addProduct(id=0, name="", units=0, manufacturingCost=0, samplingCost=0, shippingCost=0, sellingPrice=0, unitsSold=0, additionalInvestmentCost=0){
-        let product         = new Product(id, name, units, manufacturingCost, samplingCost, shippingCost, sellingPrice, unitsSold);
+    addProduct(id=0, name="", units=0, manufacturingCost=0, samplingCost=0, shippingCost=0, sellingPrice=0, percentageSold=0, additionalInvestmentCost=0){
+        let product         = new Product(id, name, units, manufacturingCost, samplingCost, shippingCost, sellingPrice, percentageSold);
         this.listOfProducts.push(product);
         this.totalUnits     += product.units;
         this.productMap[id] = (this.listOfProducts.length - 1);
         this.totalRevenue   += product.getTotalRevenue();
         this.totalCost      += product.getTotalCost() + additionalInvestmentCost + samplingCost;
         this.totalProfit    = this.totalRevenue - this.totalCost;
-        this.averageCost    = this.getAverage();
-    }
+        this.averageCost    = this.getAverage(); }
+
+    getListOfProducts()     { return this.listOfProducts; }
+    getNumberOfProducts()   { return this.listOfProducts.length; }
+    getInitialInvestment()  { return this.initialInvestment; }
+    getMonths()             { return this.months;}
+    getNetProfit()          { return this.netProfit += this.totalProfit; }
+    reportFiscalYear(year)  { return this.fiscalYear[year]; }
+    
+    setNetProfit(amount)    { this.netProfit -= amount; }
 
     getAverage(){
         let average = 0;
-        for(let indexOfProduct = 0; indexOfProduct < this.listOfProducts.length; indexOfProduct++){
+        for(let indexOfProduct = 0; indexOfProduct < this.listOfProducts.length; indexOfProduct++)
             average += this.listOfProducts[indexOfProduct].getManufacturingCost();
-        }
-        return average/this.listOfProducts.length;
+        this.averageCost = average/this.listOfProducts.length; 
+        return this.averageCost;
     }
 
-    readProduct(id){
-        return this.listOfProducts[this.productMap[id]]
-    }
+    readProduct(id){ return this.listOfProducts[this.productMap[id]] }
 
     updateProduct(id, attribute, value){
         let product = this.readProduct(id);
-        if(product && product[attribute])
-            product[attribute] = value;
+        if(product && product[attribute]) 
+            product[attribute] = value; 
     }
 
     deleteProduct(id){ // swap product to delete with last product, then delete product
@@ -57,44 +70,31 @@ export default class FinancialReport {
         let productToDeleteIndex    = this.productMap[id];
         let newId                   = replacementProduct.getId();
         this.productMap[newId]      = productToDeleteIndex;
-
         delete this.productMap[id];
         this.listOfProducts[productToDeleteIndex] = this.listOfProducts.pop();
     }
 
-    getListOfProducts()     { return this.listOfProducts; }
-    getNumberOfProducts()   { return this.listOfProducts.length; }
-    getInitialInvestment()  { return this.initialInvestment; }
-    getMonths()             { return this.months;}
-    getNetProfit()          { return this.netProfit += this.totalProfit; }
-    
-
     getTotalUnitsSold(){
         let totalUnitsSold = 0;
-        for(let indexOfProduct = 0; indexOfProduct < this.listOfProducts.length; indexOfProduct++){            
-            totalUnitsSold += this.listOfProducts[indexOfProduct].getUnitsSold();
-        }
+        for(let indexOfProduct = 0; indexOfProduct < this.listOfProducts.length; indexOfProduct++)          
+            totalUnitsSold  += this.listOfProducts[indexOfProduct].getUnitsSold();
         this.totalUnitsSold = totalUnitsSold;
-        
         return this.totalUnitsSold;
     }
 
     getTotalCost(month){
         let totalCost = 0;
         if(month == 'January') totalCost = 1000;
-        for(let indexOfProduct = 0; indexOfProduct < this.listOfProducts.length; indexOfProduct++){            
+        for(let indexOfProduct = 0; indexOfProduct < this.listOfProducts.length; indexOfProduct++)          
             totalCost += this.listOfProducts[indexOfProduct].getTotalCost();
-        }
         this.totalCost = (totalCost + (this.storeFrontCost * this.totalRevenue));
-        
         return this.totalCost;
     }
 
     getTotalRevenue(){
         let totalRevenue = 0;
-        for(let indexOfProduct = 0; indexOfProduct < this.listOfProducts.length; indexOfProduct++){
+        for(let indexOfProduct = 0; indexOfProduct < this.listOfProducts.length; indexOfProduct++)
             totalRevenue += this.listOfProducts[indexOfProduct].getTotalRevenue();
-        }
         this.totalRevenue = totalRevenue;
         return this.totalRevenue
     }
@@ -108,10 +108,6 @@ export default class FinancialReport {
         this.initialInvestment = initialInvestment;
         this.setNetProfit(initialInvestment);
         this.totalCost += initialInvestment;
-    }
-
-    setNetProfit(amount) { 
-        this.netProfit -= amount;
     }
 
     recordAndPrintMonthly(month = ``, print = false){
@@ -160,7 +156,4 @@ export default class FinancialReport {
         }
     }
 
-    reportFiscalYear(year){
-        return this.fiscalYear[year];
-    }
 }

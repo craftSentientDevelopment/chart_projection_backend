@@ -4,7 +4,7 @@ export default class Product {
     id                  = "";
     name                = "";
     units               = 0;
-    percentageSold           = 0
+    percentageSold      = 0
     manufacturingCost   = 0;
     samplingCost        = 0;
     shippingCost        = 0;
@@ -54,16 +54,16 @@ export default class Product {
     getTotalProfits()               { return this.getTotalRevenue() - this.getTotalCost(); }
     print(){
         console.log(
-        `Id:                ${this.id}
-        Name:               ${this.name}
-        Number of Units:    ${this.units}
-        Manufacuring Cost:  ${this.manufacturingCost}
-        Sample Cost:        ${this.samplingCost}
-        Shipping Cost:      ${this.shippingCost}
-        Selling Prict:      ${this.sellingPrice}
-        Total Revenue:      ${this.getTotalRevenue()}
-        Total Cost:         ${this.getTotalCost()}
-        Profits:            ${this.getTotalProfits()}`
+            `Id:                ${this.id}
+            Name:               ${this.name}
+            Number of Units:    ${this.units}
+            Manufacuring Cost:  ${this.manufacturingCost}
+            Sample Cost:        ${this.samplingCost}
+            Shipping Cost:      ${this.shippingCost}
+            Selling Prict:      ${this.sellingPrice}
+            Total Revenue:      ${this.getTotalRevenue()}
+            Total Cost:         ${this.getTotalCost()}
+            Profits:            ${this.getTotalProfits()}`
         )
     }
 }

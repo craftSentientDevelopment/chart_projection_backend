@@ -1,8 +1,8 @@
-import "./utils/basicBudgetRunner.js"
-import basicBudgetRunner from "./utils/basicBudgetRunner.js"
+import server from "./utils/servers/server.js";
 
 function main(){
-    basicBudgetRunner(true);
+    const data = {port:"5000", print:false}
+    server(data);
 }
 
 main();

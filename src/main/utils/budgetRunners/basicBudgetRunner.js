@@ -1,4 +1,4 @@
-import FinancialReport from "../finances/FinancialReport.js";
+import FinancialReport from "./../../finances/FinancialReport.js";
 
 export default function basicBudgetRunner(print){
     // initialize
@@ -43,4 +43,5 @@ export default function basicBudgetRunner(print){
             percentageSold);
         report.recordAndPrintMonthly(month,print);
     });
+    return report;
 }

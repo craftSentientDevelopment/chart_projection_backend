@@ -2,12 +2,12 @@ import "./product/Product.js";
 import Product from "./product/Product.js";
 
 export default class FinancialReport {
-    months              = [
+    months = [
         "January", "February", "March", "April", 
         "May", "June", "July", "August", 
         "September", "October", "November", "December"
     ];
-    monthlyReport       = {
+    monthlyReport = {
         January:{}, February:{}, March:{}, April:{}, 
         May:{}, June:{}, July:{}, August:{}, 
         September:{}, October:{}, November:{}, December:{}
@@ -28,7 +28,8 @@ export default class FinancialReport {
 
     constructor(listOfProducts = [], storeFrontCost= 0){ 
         this.listOfProducts = listOfProducts; 
-        this.storeFrontCost = storeFrontCost; }
+        this.storeFrontCost = storeFrontCost; 
+    }
 
     addProduct(id=0, name="", units=0, manufacturingCost=0, samplingCost=0, shippingCost=0, sellingPrice=0, percentageSold=0, additionalInvestmentCost=0){
         let product         = new Product(id, name, units, manufacturingCost, samplingCost, shippingCost, sellingPrice, percentageSold);
@@ -38,7 +39,8 @@ export default class FinancialReport {
         this.totalRevenue   += product.getTotalRevenue();
         this.totalCost      += product.getTotalCost() + additionalInvestmentCost + samplingCost;
         this.totalProfit    = this.totalRevenue - this.totalCost;
-        this.averageCost    = this.getAverage(); }
+        this.averageCost    = this.getAverage(); 
+    }
 
     getListOfProducts()     { return this.listOfProducts; }
     getNumberOfProducts()   { return this.listOfProducts.length; }
@@ -48,6 +50,7 @@ export default class FinancialReport {
     reportFiscalYear(year)  { return this.fiscalYear[year]; }
     
     setNetProfit(amount)    { this.netProfit -= amount; }
+    readProduct(id)         { return this.listOfProducts[this.productMap[id]] }
 
     getAverage(){
         let average = 0;
@@ -56,8 +59,6 @@ export default class FinancialReport {
         this.averageCost = average/this.listOfProducts.length; 
         return this.averageCost;
     }
-
-    readProduct(id){ return this.listOfProducts[this.productMap[id]] }
 
     updateProduct(id, attribute, value){
         let product = this.readProduct(id);
@@ -104,7 +105,7 @@ export default class FinancialReport {
         return this.totalProfit;
     }
 
-    setInitialInvestment(initialInvestment) { 
+    setInitialInvestment(initialInvestment){ 
         this.initialInvestment = initialInvestment;
         this.setNetProfit(initialInvestment);
         this.totalCost += initialInvestment;
@@ -155,5 +156,4 @@ export default class FinancialReport {
             console.log('---------------------------------------------------------------\n');
         }
     }
-
 }
